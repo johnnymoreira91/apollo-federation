@@ -1,13 +1,14 @@
 import { gql } from "apollo-server-core";
 // import { GraphQLDateTime } from "graphql-scalars";
 
-export default gql `
+export default gql`
+  directive @upper on FIELD_DEFINITION
 
   scalar DateTime
 
   type User {
     id: Int
-    name: String
+    name: String @upper
     uuid: String
     superUser: Boolean
     email: String
@@ -34,4 +35,4 @@ export default gql `
   type Mutation {
     createUser(input: CreateUserInput): User
   }
-`
+`;
