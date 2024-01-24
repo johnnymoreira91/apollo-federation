@@ -1,12 +1,12 @@
-const users = [ {
-  id: 1, name: 'johnny'
-}]
-
+import { createUserResolver } from '../useCase/createUserUseCase'
+import { listUserResolver } from '../useCase/listUserUseCase'
 const resolvers = {
   Query: {
-    getUsers: () => {
-      return users
-    }
+    getUsers: listUserResolver.handle
+  },
+
+  Mutation: {
+    createUser: createUserResolver.handle
   }
 }
 

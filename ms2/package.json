@@ -4,15 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "compile": "tsup",
-    "start": "npm run compile && node ./dist/index.js",
-    "dev": "tsx src/index.ts"
+    "build": "tsup src",
+    "dev": "tsx src/index.ts --watch"
   },
   "dependencies": {
     "@apollo/subgraph": "^2.7.0",
     "apollo-server": "^3.13.0",
     "apollo-server-core": "^3.13.0",
-    "graphql": "^16.8.1"
+    "graphql": "^16.8.1",
+    "graphql-scalars": "^1.22.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
