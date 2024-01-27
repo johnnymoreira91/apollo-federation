@@ -20,13 +20,15 @@ async function UserController(req, res) {
 
   const accessToken = jwt.sign(user, 'teste', {expiresIn: 3600})
 
-  return {
+  const payload = {
     accessToken,
     payload: {
       id: user.id,
       email: user.email
     }
   }
+
+  return res.status(200).json(payload)
 
 }
 
