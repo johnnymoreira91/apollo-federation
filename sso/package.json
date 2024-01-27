@@ -2,8 +2,10 @@
   "name": "sso",
   "version": "1.0.0",
   "main": "index.js",
+  "module": "main.js",
   "license": "MIT",
   "dependencies": {
+    "esm": "^3.2.25",
     "express": "^4.18.2"
   }
 }
