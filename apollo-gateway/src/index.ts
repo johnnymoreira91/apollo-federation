@@ -1,18 +1,24 @@
-import { ApolloGateway, RemoteGraphQLDataSource }from '@apollo/gateway'
-import { ApolloServer } from 'apollo-server-express'
-import { expressjwt } from 'express-jwt'
-import express from 'express'
+import { ApolloGateway, RemoteGraphQLDataSource } from "@apollo/gateway";
+import { ApolloServer } from "apollo-server-express";
+import express from "express";
+import jwt from "jsonwebtoken";
 
 const port = 4000;
 const app = express();
 
-app.use(
-  expressjwt({
-    secret: "teste",
-    algorithms: ["HS256"],
-    credentialsRequired: false
-  })
-);
+app.use((req, res, next) => {
+  try {
+    const authToken = req.headers.authorization;
+    if (authToken) {
+      const decodedToken = jwt.verify(authToken, "teste");
+      // @ts-ignore
+      req.user = decodedToken;
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 const gateway = new ApolloGateway({
   serviceList: [
@@ -28,56 +34,22 @@ const gateway = new ApolloGateway({
           // @ts-ignore
           context.user ? JSON.stringify(context.user) : null
         );
-      }
+      },
     });
-  }
+  },
 });
 
 const server = new ApolloServer({
   gateway,
   context: ({ req }) => {
-    if (req.body.operationName === 'signIn') {
-      return {}
-    }
     // @ts-ignore
-    const user = req.user || null;
-    return { user };
-  }
+    return { user: req.user };
+  },
 });
 
-const startServer = async() => {
-  await server.start()
+server.start().then(() => {
   server.applyMiddleware({ app });
-  
   app.listen({ port }, () =>
     console.log(`Server ready at http://localhost:${port}${server.graphqlPath}`)
   );
-}
-
-startServer()
-// import { ApolloServer } from "apollo-server";
-// import { ApolloGateway, IntrospectAndCompose } from "@apollo/gateway";
-
-// const gateway = new ApolloGateway({
-//   supergraphSdl: new IntrospectAndCompose({
-//     subgraphs: [
-//       { name: "user", url: "http://localhost:4001" },
-//       { name: "product", url: "http://localhost:4002" },
-//     ],
-//   }),
-// });
-
-// const server = new ApolloServer({
-//   gateway,
-// });
-
-// server
-//   .listen({
-//     port: 4000,
-//   })
-//   .then(({ url }: { url: string }) => {
-//     console.log(`🚀 Gateway ready at ${url}`);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
+});

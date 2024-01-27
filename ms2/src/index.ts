@@ -17,6 +17,7 @@ const server = new ApolloServer({
     }
     // @ts-ignore
     const user = req.headers.user ? JSON.parse(req.headers.user) : null;
+    // console.log(req.headers)
     return { user };
   }
 });
