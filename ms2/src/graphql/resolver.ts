@@ -1,3 +1,4 @@
+import { authenticationResolver } from '../useCase/authentication'
 import { createUserResolver } from '../useCase/createUserUseCase'
 import { listUserResolver } from '../useCase/listUserUseCase'
 const resolvers = {
@@ -6,7 +7,8 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: createUserResolver.handle
+    createUser: createUserResolver.handle,
+    signIn: authenticationResolver.handle
   }
 }
 

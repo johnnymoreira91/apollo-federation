@@ -19,6 +19,16 @@ export default gql`
     updatedAt: DateTime
   }
 
+  type SignInPayload {
+    id: Int 
+    email: String
+  }
+
+  type SignInResponse {
+    accessToken: String
+    payload: SignInPayload
+  }
+
   input CreateUserInput {
     name: String
     superUser: Boolean
@@ -28,11 +38,17 @@ export default gql`
     rg: String
   }
 
+  input SignInput {
+    email: String
+    password: String
+  }
+
   type Query {
     getUsers: [User]
   }
 
   type Mutation {
     createUser(input: CreateUserInput): User
+    signIn(input: SignInput): SignInResponse
   }
 `;
