@@ -13,10 +13,8 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   name      String
-  uuid      String   @unique @default(uuid())
+  uuid      String   @unique
   superUser Boolean  @default(false)
-  email     String   @unique
-  password  String   @default("123456")
   cpf       String
   rg        String
   createdAt DateTime @default(now())

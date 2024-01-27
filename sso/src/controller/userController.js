@@ -24,7 +24,8 @@ async function UserController(req, res) {
     accessToken,
     payload: {
       id: user.id,
-      email: user.email
+      email: user.email,
+      uuid: user.uuid
     }
   }
 

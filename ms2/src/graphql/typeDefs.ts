@@ -11,8 +11,6 @@ export default gql`
     name: String @upper
     uuid: String
     superUser: Boolean
-    email: String
-    password: String
     cpf: String
     rg: String
     createdAt: DateTime
@@ -32,8 +30,6 @@ export default gql`
   input CreateUserInput {
     name: String
     superUser: Boolean
-    email: String
-    password: String
     cpf: String
     rg: String
   }

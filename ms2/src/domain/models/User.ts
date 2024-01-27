@@ -3,8 +3,6 @@ export interface UserModel {
   name: string
   uuid: string
   superUser: boolean
-  email: string
-  password: string
   cpf: string
   rg: string
   createdAt: Date
@@ -14,8 +12,6 @@ export interface UserModel {
 export interface CreateUserModel {
   name: string
   superUser: boolean
-  email: string
-  password: string
   cpf: string
   rg: string
 }
