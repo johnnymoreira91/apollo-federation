@@ -10,7 +10,15 @@ const debug = Debug('user');
 const resolvers = userResolver
 
 const server = new ApolloServer({
-  schema: buildSubgraphSchema({ typeDefs, resolvers })
+  schema: buildSubgraphSchema({ typeDefs, resolvers }),
+  context: ({ req }) => {
+    if (req.body.operationName === 'signIn') {
+      return {}
+    }
+    // @ts-ignore
+    const user = req.headers.user ? JSON.parse(req.headers.user) : null;
+    return { user };
+  }
 });
 
 server.listen({ port: 4001 }).then(() => {
