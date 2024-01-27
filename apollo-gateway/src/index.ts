@@ -39,6 +39,7 @@ const server = new ApolloServer({
     if (req.body.operationName === 'signIn') {
       return {}
     }
+    // @ts-ignore
     const user = req.user || null;
     return { user };
   }
